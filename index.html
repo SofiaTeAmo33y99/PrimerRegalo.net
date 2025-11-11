@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Sofi, mi amor ❤️</title>
+    <title>Para Sofi, mi amor eterno ❤️</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
 
     <style>
-        /* --- Configuración General --- */
+        /* --- Configuración General y Responsividad --- */
         * {
             margin: 0;
             padding: 0;
@@ -20,30 +20,16 @@
         html, body {
             height: 100%;
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #ffdde1, #ee9ca7); /* Gradiente de amor */
+            background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%); /* Gradiente de amor */
             color: #4b001a;
-            overflow: hidden; /* Oculta el scroll para que la lluvia de corazones sea a pantalla completa */
+            overflow-x: hidden; /* Evita scroll horizontal */
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 20px; /* Padding general para pantallas pequeñas */
         }
 
-        /* --- Contenedor Principal --- */
-        .container {
-            text-align: center;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.7); /* Fondo blanco traslúcido */
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px); /* Efecto cristal */
-            max-width: 90%;
-            width: 600px;
-            position: relative;
-            z-index: 10;
-            overflow: hidden; /* Para que las animaciones de entrada no se salgan */
-        }
-
-        /* --- Lluvia de Corazones (Fondo) --- */
+        /* --- Lluvia de Corazones y "Te Amo" (Fondo) --- */
         #heart-rain-container {
             position: fixed;
             top: 0;
@@ -51,87 +37,134 @@
             width: 100%;
             height: 100%;
             z-index: 1;
-            pointer-events: none; /* Para poder hacer clic "a través" */
+            pointer-events: none;
+            overflow: hidden; /* Asegura que no haya scrollbar por los elementos que caen */
         }
 
-        .heart-rain {
+        .falling-item {
             position: absolute;
             font-size: 1.5rem;
             color: #ff8fab; /* Rosa corazón */
             animation: fall linear infinite;
             opacity: 0;
+            white-space: nowrap; /* Para que "Te Amo" no se divida */
+        }
+        .falling-item.text {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2rem;
+            color: #d6336c;
+            font-weight: bold;
         }
 
         @keyframes fall {
             0% {
                 transform: translateY(-10vh) rotate(0deg);
-                opacity: 1;
+                opacity: 0; /* Empieza invisible */
+            }
+            10% {
+                opacity: 0.8; /* Se vuelve visible */
+            }
+            90% {
+                opacity: 0.8;
             }
             100% {
                 transform: translateY(110vh) rotate(360deg);
-                opacity: 0.8;
+                opacity: 0; /* Termina invisible */
             }
         }
-        /* --- Fin de Lluvia de Corazones --- */
+        /* --- Fin de Lluvia de Corazones y "Te Amo" --- */
 
+        /* --- Contenedor Principal (Modal-like) --- */
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9); /* Fondo blanco traslúcido */
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(15px); /* Efecto cristal más fuerte */
+            max-width: 700px; /* Ancho máximo para PC */
+            width: 100%;
+            position: relative;
+            z-index: 10;
+            overflow: hidden; /* Para animaciones de entrada/salida */
+            padding: 30px; /* Más padding para contenido */
+            opacity: 0; /* Inicia oculto para la animación de entrada */
+            transform: translateY(20px); /* Ligeramente desplazado */
+            animation: containerEntrance 1s ease-out forwards;
+        }
+
+        @keyframes containerEntrance {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
 
         /* --- Título de Amor --- */
         h1 {
             font-family: 'Great Vibes', cursive;
-            font-size: 4rem;
+            font-size: 4.5rem; /* Más grande */
             color: #d6336c; /* Rosa intenso */
-            text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.5);
-            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.7); /* Sombra más pronunciada */
+            margin-bottom: 25px;
+            line-height: 1.1;
         }
 
         /* --- Sección del Corazón Clickeable --- */
         #clicker-section p {
-            font-size: 1.2rem;
-            margin-bottom: 25px;
+            font-size: 1.3rem; /* Texto más grande */
+            margin-bottom: 30px;
+            font-weight: 500;
+            color: #590d22;
         }
 
         #main-heart {
-            width: 150px;
-            height: 150px;
+            width: 180px; /* Corazón más grande */
+            height: 180px;
             background-color: #e02d5f; /* Color del corazón */
             position: relative;
-            margin: 30px auto;
+            margin: 40px auto; /* Más margen */
             transform: rotate(-45deg);
             cursor: pointer;
             transition: transform 0.2s ease-out, background-color 0.2s;
-            box-shadow: 0 5px 15px rgba(179, 35, 74, 0.5);
+            box-shadow: 0 8px 20px rgba(179, 35, 74, 0.6); /* Sombra más fuerte */
+            animation: pulse 1.5s infinite alternate; /* Animación de latido */
+        }
+        @keyframes pulse {
+            from { transform: rotate(-45deg) scale(1); }
+            to { transform: rotate(-45deg) scale(1.08); }
         }
 
         #main-heart:before,
         #main-heart:after {
             content: "";
             position: absolute;
-            width: 150px;
-            height: 150px;
+            width: 180px;
+            height: 180px;
             background-color: #e02d5f;
             border-radius: 50%;
             transition: background-color 0.2s;
         }
 
         #main-heart:before {
-            top: -75px;
+            top: -90px; /* Ajuste para el nuevo tamaño */
             left: 0;
         }
 
         #main-heart:after {
             top: 0;
-            left: 75px;
+            left: 90px; /* Ajuste para el nuevo tamaño */
         }
 
         /* Efecto al pasar el mouse */
         #main-heart:hover {
-            transform: rotate(-45deg) scale(1.1);
+            transform: rotate(-45deg) scale(1.15); /* Efecto más pronunciado */
+            animation: none; /* Detiene el pulso al hacer hover */
         }
 
         /* Efecto al hacer clic */
         .heart-clicked {
             transform: rotate(-45deg) scale(1.05) !important;
             background-color: #ff4d80 !important;
+            box-shadow: 0 5px 15px rgba(255, 77, 128, 0.8) !important;
+            animation: none;
         }
         .heart-clicked:before,
         .heart-clicked:after {
@@ -143,141 +176,226 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) rotate(45deg); /* Gira el texto para que esté derecho */
-            font-size: 3rem;
+            transform: translate(-50%, -50%) rotate(45deg);
+            font-size: 4rem; /* Contador más grande */
             color: white;
             font-weight: bold;
             z-index: 10;
-            user-select: none; /* Evita que el número se seleccione */
+            user-select: none;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
         }
 
         /* --- Secciones Ocultas (Mensaje e Hijos) --- */
         #message-section,
         #names-section {
             display: none; /* Ocultas por defecto */
-            animation: fadeIn 1.5s ease-out; /* Animación de entrada */
+            animation: fadeInFromTop 1s ease-out forwards; /* Nueva animación de entrada */
+            padding-top: 20px;
+            margin-top: 20px;
+        }
+        
+        #names-section {
+            border-top: 2px dashed #ffb3c1;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px) scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+        @keyframes fadeInFromTop {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         /* Animación de salida para el corazón */
         .fadeOut {
-            animation: fadeOut 0.5s forwards;
+            animation: fadeOutDown 0.7s forwards;
         }
-        @keyframes fadeOut {
-            from { opacity: 1; }
-            to { opacity: 0; transform: scale(0.8); }
+        @keyframes fadeOutDown {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(50px) scale(0.8); }
         }
 
         #message-section h2 {
             font-family: 'Great Vibes', cursive;
-            font-size: 3rem;
+            font-size: 3.5rem;
             color: #c9184a;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
         }
         
         #message-section p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            padding: 0 20px;
+            font-size: 1.2rem;
+            line-height: 1.7;
+            padding: 0 25px;
+            margin-bottom: 30px;
         }
 
         /* --- Sección de Nombres --- */
-        #names-section {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px dashed #ffb3c1;
-        }
-
         #names-section h3 {
             font-family: 'Great Vibes', cursive;
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             color: #d6336c;
+            margin-bottom: 15px;
         }
 
         #names-section h4 {
-            font-size: 1.3rem;
-            margin-top: 15px;
+            font-size: 1.4rem;
+            margin-top: 25px;
+            margin-bottom: 10px;
             color: #590d22;
+            font-weight: 600;
         }
 
         #names-section ul {
-            list-style-type: none; /* Quitamos bullets por defecto */
+            list-style-type: none;
             padding-left: 0;
             margin-top: 10px;
         }
 
         #names-section ul li {
-            font-size: 1.1rem;
-            margin: 8px 0;
+            font-size: 1.2rem;
+            margin: 10px 0;
             display: flex;
             align-items: center;
             justify-content: center;
+            color: #4b001a;
         }
         
-        /* Personalización de corazón rosa */
         #names-section ul li::before {
-            content: '💖'; /* Corazón rosa como viñeta */
-            margin-right: 10px;
-            font-size: 1.2rem;
+            content: '💖';
+            margin-right: 12px;
+            font-size: 1.3rem;
         }
         
         /* Cuadro de Niñas */
         #girls-form {
-            margin-top: 15px;
+            margin-top: 20px;
             display: flex;
-            justify-content: center;
-            gap: 10px;
+            flex-direction: column; /* Apilar en móviles */
+            align-items: center;
+            gap: 15px;
         }
 
         #girl-name-input {
-            padding: 10px;
+            padding: 12px 15px;
             border: 2px solid #ff8fab;
-            border-radius: 8px;
+            border-radius: 10px;
             font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
+            font-size: 1.1rem;
+            width: 80%; /* Ancho responsivo */
+            max-width: 300px;
+            text-align: center;
+            transition: all 0.3s ease;
         }
         
         #girl-name-input:focus {
             outline: none;
             border-color: #e02d5f;
-            box-shadow: 0 0 10px #ffc2d1;
+            box-shadow: 0 0 15px #ffc2d1;
+            transform: scale(1.02);
         }
 
         #girl-name-result {
-            margin-top: 10px;
-            font-size: 1rem;
+            margin-top: 15px;
+            font-size: 1.1rem;
             color: #c9184a;
             font-weight: bold;
-            height: 20px; /* Para que no salte el layout */
+            min-height: 25px; /* Para que no salte el layout */
         }
         
-        /* Animación "shake" para el mensaje de error */
         .shake {
             animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+            color: #d6336c; /* Color de texto durante el shake */
         }
 
         @keyframes shake {
-          10%, 90% { transform: translate3d(-1px, 0, 0); }
-          20%, 80% { transform: translate3d(2px, 0, 0); }
-          30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-          40%, 60% { transform: translate3d(4px, 0, 0); }
+          10%, 90% { transform: translate3d(-2px, 0, 0); }
+          20%, 80% { transform: translate3d(3px, 0, 0); }
+          30%, 50%, 70% { transform: translate3d(-5px, 0, 0); }
+          40%, 60% { transform: translate3d(5px, 0, 0); }
         }
 
         /* --- Footer --- */
         footer {
-            margin-top: 30px;
-            font-size: 0.8rem;
+            margin-top: 40px;
+            font-size: 0.9rem;
             color: #800f2f;
+            font-weight: 300;
+        }
+
+        /* --- Media Queries para Responsividad Móvil --- */
+        @media (max-width: 600px) {
+            html, body {
+                padding: 10px;
+            }
+
+            .container {
+                border-radius: 15px;
+                padding: 20px;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            }
+
+            h1 {
+                font-size: 3rem;
+                margin-bottom: 20px;
+            }
+
+            #clicker-section p {
+                font-size: 1rem;
+                margin-bottom: 20px;
+            }
+
+            #main-heart {
+                width: 130px;
+                height: 130px;
+                margin: 30px auto;
+            }
+            #main-heart:before,
+            #main-heart:after {
+                width: 130px;
+                height: 130px;
+            }
+            #main-heart:before { top: -65px; }
+            #main-heart:after { left: 65px; }
+
+            #click-counter {
+                font-size: 2.8rem;
+            }
+
+            #message-section h2 {
+                font-size: 2.5rem;
+            }
+            #message-section p {
+                font-size: 1rem;
+                padding: 0 10px;
+            }
+
+            #names-section h3 {
+                font-size: 2.2rem;
+            }
+            #names-section h4 {
+                font-size: 1.2rem;
+            }
+            #names-section ul li {
+                font-size: 1rem;
+            }
+
+            #girl-name-input {
+                width: 95%;
+                font-size: 1rem;
+            }
+            #girl-name-result {
+                font-size: 0.9rem;
+            }
+
+            footer {
+                margin-top: 30px;
+                font-size: 0.75rem;
+            }
+
+            .falling-item {
+                font-size: 1rem; /* Más pequeños en móvil */
+            }
+            .falling-item.text {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -290,7 +408,7 @@
         <h1>Sofía Totorico, Te amo</h1>
 
         <section id="clicker-section">
-            <p>¡Dale <strong>137</strong> besos al corazón para desbloquear mi mensaje!</p>
+            <p>¡Dale <strong>137</strong> besos a este corazón para descubrir mi mensaje especial!</p>
             <div id="main-heart">
                 <span id="click-counter">137</span>
             </div>
@@ -331,3 +449,6 @@
     <script src="script.js"></script>
 </body>
 </html>
+
+
+
