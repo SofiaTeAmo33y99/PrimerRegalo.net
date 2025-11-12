@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tu Espacio de Calma</title>
+    <title>Tu lugar de calma hecho por tu bebé 33 :3</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -183,14 +183,10 @@
             width: 180px; /* Ancho base */
             height: 350px; /* Alto base */
             background-color: var(--primary-color);
-            border-radius: 50% 50% 0 0 / 10% 10% 0 0; /* Simula forma humana */
+            border-radius: 50% 50% 40% 40% / 15% 15% 30% 30%; /* Forma más curvilínea */
             margin: 20px auto;
             border: 2px solid var(--text-color);
             overflow: hidden; /* Para que las partes no se salgan */
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
         }
 
         .body-part {
@@ -209,6 +205,7 @@
             line-height: 1.2;
             padding: 2px;
             box-sizing: border-box;
+            border-radius: 10px; /* Bordes ligeramente redondeados para las partes */
         }
 
         .body-part:hover {
@@ -222,15 +219,15 @@
             z-index: 10; /* Para que esté por encima de otras partes */
         }
 
-        /* Definiciones de las partes del cuerpo */
-        #head { top: 0; left: 50%; transform: translateX(-50%); width: 70px; height: 70px; border-radius: 50%; }
-        #neck-shoulders { top: 60px; left: 50%; transform: translateX(-50%); width: 120px; height: 50px; border-radius: 20px;}
-        #chest { top: 100px; left: 50%; transform: translateX(-50%); width: 140px; height: 70px; border-radius: 30px;}
-        #abdomen { top: 160px; left: 50%; transform: translateX(-50%); width: 130px; height: 60px; border-radius: 25px;}
-        #arms { top: 90px; left: 50%; transform: translateX(-50%); width: 200px; height: 100px; } /* Área más grande para abarcar los brazos */
-        #pelvis { top: 210px; left: 50%; transform: translateX(-50%); width: 140px; height: 50px; border-radius: 20px;}
-        #legs { top: 250px; left: 50%; transform: translateX(-50%); width: 140px; height: 70px; }
-        #feet { top: 310px; left: 50%; transform: translateX(-50%); width: 100px; height: 40px; border-radius: 0 0 15px 15px;}
+        /* Definiciones de las partes del cuerpo ajustadas para la forma humana */
+        #head { top: 10px; left: 50%; transform: translateX(-50%); width: 70px; height: 70px; border-radius: 50%; }
+        #neck-shoulders { top: 70px; left: 50%; transform: translateX(-50%); width: 140px; height: 40px; border-radius: 20px;}
+        #chest { top: 100px; left: 50%; transform: translateX(-50%); width: 150px; height: 60px; border-radius: 30px 30px 10px 10px;}
+        #abdomen { top: 155px; left: 50%; transform: translateX(-50%); width: 140px; height: 50px; border-radius: 10px 10px 25px 25px;}
+        #arms { top: 90px; left: 50%; transform: translateX(-50%); width: 220px; height: 120px; } /* Área más grande para abarcar los brazos */
+        #pelvis { top: 200px; left: 50%; transform: translateX(-50%); width: 145px; height: 45px; border-radius: 20px;}
+        #legs { top: 240px; left: 50%; transform: translateX(-50%); width: 140px; height: 70px; border-radius: 10px 10px 0 0;}
+        #feet { top: 305px; left: 50%; transform: translateX(-50%); width: 100px; height: 40px; border-radius: 0 0 15px 15px;}
         
         #scan-instruction {
             margin-top: 20px;
@@ -319,7 +316,7 @@
     <div class="container">
         
         <header>
-            <h1>Tu Espacio de Calma</h1>
+            <h1>Tu lugar de calma hecho por tu bebé 33 :3</h1>
             <p>Un momento para ti. Respira, conéctate y encuentra tu centro.</p>
         </header>
 
