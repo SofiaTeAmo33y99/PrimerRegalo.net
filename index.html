@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Un Espacio de Calma</title>
+    <title>Tu espacio de calma, Creado por tu fan #1 :3</title>
     <script src="script.js" defer></script>
 
     <style>
@@ -93,6 +93,7 @@
             border-radius: 8px;
             position: relative;
             overflow: hidden;
+            margin-bottom: 20px;
         }
 
         #breathing-circle {
@@ -175,13 +176,73 @@
             margin-bottom: 8px;
         }
 
+        /* --- Escaneo Corporal --- */
+        .body-scan-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            background-color: var(--color-bg);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .body-scan-svg {
+            width: 100%;
+            max-width: 250px; /* Ajusta el tamaño de la silueta */
+            height: auto;
+            border: 1px solid var(--color-primary);
+            border-radius: 8px;
+            background-color: white;
+        }
+
+        .body-scan-svg path {
+            fill: #e0f2f1; /* Color base del cuerpo */
+            stroke: var(--color-text-light);
+            stroke-width: 0.8;
+            transition: fill 0.2s ease, stroke-width 0.2s ease;
+            cursor: pointer;
+        }
+
+        .body-scan-svg path:hover {
+            fill: var(--color-primary);
+            stroke-width: 1.5;
+        }
+
+        .body-scan-svg path.active {
+            fill: var(--color-secondary);
+            stroke-width: 1.5;
+            animation: pulse-active 1.5s infinite alternate; /* Animación para la zona activa */
+        }
+        
+        @keyframes pulse-active {
+            from { fill: var(--color-secondary); }
+            to { fill: var(--color-primary); }
+        }
+
+        #scan-instructions {
+            margin-top: 20px;
+            background-color: #ffffff;
+            border: 1px solid var(--color-secondary);
+            padding: 15px;
+            border-radius: 8px;
+            min-height: 80px; /* Para evitar que el layout salte */
+            display: flex;
+            align-items: center;
+            text-align: center;
+            font-size: 1.1em;
+            color: var(--color-text);
+            font-style: italic;
+            transition: all 0.3s ease-out;
+        }
+
     </style>
 </head>
 <body>
 
     <div class="container">
         <header>
-            <h1>Un Espacio de Calma</h1>
+            <h1>Tu espacio de calma, Creado por tu fan #1 :3</h1>
             <p>Bienvenido. Estás en un lugar seguro. Respira.</p>
         </header>
 
@@ -287,6 +348,31 @@
             </details>
         </section>
 
+        <section id="body-scan">
+            <h2>Escaneo Corporal Interactivo</h2>
+            <p>Dirige tu atención a las diferentes partes de tu cuerpo. Observa cualquier sensación (tensión, calor, frío, picazón, etc.) sin juzgarla. Solo nota y respira.</p>
+
+            <div class="body-scan-container">
+                <svg viewBox="0 0 200 400" class="body-scan-svg">
+                    <title>Silueta Humana para Escaneo Corporal</title>
+                    <path id="head" d="M100 20 C115 20, 125 35, 125 50 L125 60 C125 75, 115 90, 100 90 C85 90, 75 75, 75 60 L75 50 C75 35, 85 20, 100 20 Z" data-label="Cabeza y Rostro"/>
+                    <path id="neck-shoulders" d="M90 90 L110 90 L130 110 L135 120 L130 130 L120 125 L110 120 H90 L80 125 L70 130 L65 120 L70 110 L90 90 Z" data-label="Cuello y Hombros"/>
+                    <path id="chest-upper-back" d="M90 120 H110 V150 H120 V160 H110 V170 H90 V160 H80 V150 H90 Z M130 110 L135 120 V160 C135 170, 130 175, 120 180 L110 185 V170 H120 V160 H110 L90 160 H80 L70 160 C65 170, 60 175, 60 160 V120 L65 110 L70 110 Z" data-label="Pecho y Espalda Superior"/>
+                    <path id="arm-left" d="M130 120 C145 130, 150 150, 150 170 V200 C150 220, 145 240, 130 250 L120 230 L125 180 L125 140 L130 120 Z" data-label="Brazo Izquierdo"/>
+                    <path id="arm-right" d="M70 120 C55 130, 50 150, 50 170 V200 C50 220, 55 240, 70 250 L80 230 L75 180 L75 140 L70 120 Z" data-label="Brazo Derecho"/>
+                    <path id="abdomen-lower-back" d="M90 170 H110 V220 H90 Z M75 180 L80 230 C80 240, 90 250, 100 250 C110 250, 120 240, 120 230 L125 180 Z" data-label="Abdomen y Espalda Baja"/>
+                    <path id="hips-glutes" d="M80 230 C80 240, 90 250, 100 250 C110 250, 120 240, 120 230 L110 250 L90 250 Z M75 240 C70 250, 70 260, 75 270 L85 275 L90 260 L80 250 Z M125 240 C130 250, 130 260, 125 270 L115 275 L110 260 L120 250 Z" data-label="Cadera y Glúteos"/>
+                    <path id="thigh-left" d="M90 250 L95 270 V300 L90 310 L85 300 L80 270 Z M100 250 L105 270 V300 L110 310 L115 300 L120 270 Z" data-label="Muslo y Rodilla Izquierda"/>
+                    <path id="thigh-right" d="M80 270 L85 300 L90 310 L95 300 V270 L90 250 Z M110 270 L115 300 L120 310 L125 300 V270 L120 250 Z" data-label="Muslo y Rodilla Derecha"/>
+                    <path id="lower-leg-left" d="M85 310 V350 L90 360 L95 350 V310 Z" data-label="Pantorrilla Izquierda"/>
+                    <path id="lower-leg-right" d="M105 310 V350 L110 360 L115 350 V310 Z" data-label="Pantorrilla Derecha"/>
+                    <path id="foot-left" d="M85 360 L80 370 H90 L95 360 Z" data-label="Pie Izquierdo"/>
+                    <path id="foot-right" d="M105 360 L110 370 H120 L115 360 Z" data-label="Pie Derecho"/>
+                </svg>
+                <p id="scan-instructions">Haz clic en una parte del cuerpo para empezar tu escaneo.</p>
+            </div>
+        </section>
+
         <section id="psicoeducacion">
             <h2>Entendiendo la Ansiedad (El "Por Qué")</h2>
             <p>El conocimiento es poder. Entender qué es la ansiedad reduce el miedo a la propia sensación.</p>
@@ -359,6 +445,9 @@
             <h2>Esto es un primer paso, no el último</h2>
             <p>Estas herramientas son excelentes para manejar los síntomas en el momento. Si sientes que la ansiedad interfiere con tu vida diaria, por favor considera buscar ayuda profesional.</p>
             <p>Hablar con un terapeuta puede darte herramientas personalizadas y ayudarte a llegar a la raíz del problema. No tienes que pasar por esto solo.</p>
+            <p style="text-align: center; font-style: italic; font-size: 1.2em; color: var(--color-primary); margin-top: 30px;">
+                No estas sola mi vida, Lauty va a estar siempre para cuidarte y apoyarte te adoro.
+            </p>
         </section>
 
     </div>
