@@ -17,6 +17,7 @@
             --text-color: #3A5049;    /* Un gris verdoso oscuro, suave para leer */
             --accent-color: #F4B6C2;  /* Un rosa pálido suave para los corazones */
             --white: #FFFFFF;
+            --highlight-color: #7EC8AE; /* Un verde más vibrante para el escaneo corporal */
         }
 
         /* --- Estilos Generales --- */
@@ -169,7 +170,79 @@
             margin-top: 0;
         }
 
-        /* --- 3. Psicoeducación (Usando <details>) --- */
+        /* --- 3. Escaneo Corporal --- */
+        #body-scan-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        #human-silhouette {
+            position: relative;
+            width: 180px; /* Ancho base */
+            height: 350px; /* Alto base */
+            background-color: var(--primary-color);
+            border-radius: 50% 50% 0 0 / 10% 10% 0 0; /* Simula forma humana */
+            margin: 20px auto;
+            border: 2px solid var(--text-color);
+            overflow: hidden; /* Para que las partes no se salgan */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .body-part {
+            position: absolute;
+            background-color: transparent; /* Por defecto transparente */
+            border: 1px solid rgba(0,0,0,0.0); /* Borde transparente */
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+            color: transparent; /* Texto transparente por defecto */
+            font-weight: bold;
+            text-align: center;
+            line-height: 1.2;
+            padding: 2px;
+            box-sizing: border-box;
+        }
+
+        .body-part:hover {
+            background-color: rgba(255, 255, 255, 0.3); /* Un poco de brillo al pasar el ratón */
+        }
+
+        .body-part.highlighted {
+            background-color: var(--highlight-color); /* Color de resaltado */
+            border-color: var(--text-color);
+            color: var(--white); /* Texto visible al resaltar */
+            z-index: 10; /* Para que esté por encima de otras partes */
+        }
+
+        /* Definiciones de las partes del cuerpo */
+        #head { top: 0; left: 50%; transform: translateX(-50%); width: 70px; height: 70px; border-radius: 50%; }
+        #neck-shoulders { top: 60px; left: 50%; transform: translateX(-50%); width: 120px; height: 50px; border-radius: 20px;}
+        #chest { top: 100px; left: 50%; transform: translateX(-50%); width: 140px; height: 70px; border-radius: 30px;}
+        #abdomen { top: 160px; left: 50%; transform: translateX(-50%); width: 130px; height: 60px; border-radius: 25px;}
+        #arms { top: 90px; left: 50%; transform: translateX(-50%); width: 200px; height: 100px; } /* Área más grande para abarcar los brazos */
+        #pelvis { top: 210px; left: 50%; transform: translateX(-50%); width: 140px; height: 50px; border-radius: 20px;}
+        #legs { top: 250px; left: 50%; transform: translateX(-50%); width: 140px; height: 70px; }
+        #feet { top: 310px; left: 50%; transform: translateX(-50%); width: 100px; height: 40px; border-radius: 0 0 15px 15px;}
+        
+        #scan-instruction {
+            margin-top: 20px;
+            font-size: 1.1rem;
+            min-height: 80px; /* Para evitar saltos de contenido */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 10px;
+        }
+
+        /* --- 4. Psicoeducación (Usando <details>) --- */
         details {
             background-color: var(--bg-color);
             border-radius: 8px;
@@ -202,7 +275,7 @@
             margin-bottom: 5px;
         }
         
-        /* --- 4. Rincón Seguro (Personalización) --- */
+        /* --- 5. Rincón Seguro (Personalización) --- */
         #personal-box {
             background: linear-gradient(135deg, var(--white), var(--bg-color));
             border: 2px solid var(--accent-color);
@@ -252,6 +325,7 @@
 
         <nav>
             <a href="#ayuda-ya">Ayuda Inmediata</a>
+            <a href="#escaneo-corporal">Escaneo Corporal</a>
             <a href="#tecnicas">Más Técnicas</a>
             <a href="#entender">Entender la Ansiedad</a>
             <a href="#rincon-seguro">Tu Rincón Seguro</a>
@@ -278,6 +352,24 @@
                 <li><strong>2 cosas que puedas OLER:</strong> (El aroma del café, el perfume en tu muñeca, el aire limpio).</li>
                 <li><strong>1 cosa que puedas SABOREAR:</strong> (El último sorbo de agua, un chicle, o simplemente el sabor de tu propia boca).</li>
             </ul>
+        </section>
+
+        <section id="escaneo-corporal">
+            <h2>Escaneo Corporal Interactivo</h2>
+            <p>Conecta con tu cuerpo y libera la tensión. Selecciona una parte del cuerpo para comenzar.</p>
+            <div id="body-scan-container">
+                <div id="human-silhouette">
+                    <div id="head" class="body-part" data-part="Cabeza"></div>
+                    <div id="neck-shoulders" class="body-part" data-part="Cuello y Hombros"></div>
+                    <div id="chest" class="body-part" data-part="Pecho"></div>
+                    <div id="abdomen" class="body-part" data-part="Abdomen"></div>
+                    <div id="arms" class="body-part" data-part="Brazos y Manos"></div>
+                    <div id="pelvis" class="body-part" data-part="Pelvis y Caderas"></div>
+                    <div id="legs" class="body-part" data-part="Piernas"></div>
+                    <div id="feet" class="body-part" data-part="Pies"></div>
+                </div>
+                <p id="scan-instruction">Haz clic en una parte del cuerpo para recibir una guía.</p>
+            </div>
         </section>
 
         <section id="tecnicas">
@@ -372,7 +464,7 @@
         </section>
 
         <footer>
-            <p>Hecho con cariño para ti. Recuerda: está bien no estar bien. Eres fuerte.</p>
+            <p>No estás sola mi vida, Lauty va a estar siempre para cuidarte y apoyarte te adoro.</p>
         </footer>
 
     </div>
