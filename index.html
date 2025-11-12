@@ -3,566 +3,454 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Refugio de Calma</title>
-    <!-- Carga de Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Carga de Iconos (Lucide) -->
-    <script src="https://unpkg.com/lucide-icons"></script>
-    <!-- Fuente Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <title>Tu espacio de calma, Creado por tu fan #1 :3</title>
+    <script src="script.js" defer></script>
 
     <style>
-        /* Estilos personalizados y animaciones */
+        /* --- Variables de Color y Tipografía --- */
+        :root {
+            --color-bg: #f4f9f8;        /* Un blanco menta muy pálido */
+            --color-primary: #a8d8c9;   /* Verde menta principal */
+            --color-secondary: #d0eaf0;  /* Azul pálido suave */
+            --color-text: #334e48;      /* Un gris/verde oscuro y calmado */
+            --color-text-light: #5a7d74; /* Texto secundario */
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* --- Reseteo y Estilos Globales --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: var(--font-main);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            padding: 20px;
         }
 
-        /* Colores personalizados de menta/azul pálido */
-        .bg-calm-50 { background-color: #F0F9F8; }
-        .bg-calm-100 { background-color: #D6F1EE; }
-        .bg-calm-200 { background-color: #AEE5E0; }
-        .text-calm-700 { color: #2D7A70; }
-        .text-calm-900 { color: #1D4E49; }
-        .border-calm-300 { border-color: #AEE5E0; }
-        .hover\:bg-calm-200:hover { background-color: #AEE5E0; }
-        .focus\:ring-calm-300:focus { ring-color: #AEE5E0; }
-
-        /* Animación del círculo de respiración */
-        @keyframes breathe {
-            0%   { transform: scale(0.8); opacity: 0.8; }
-            40%  { transform: scale(1); opacity: 1; } /* 4s Inhala */
-            100% { transform: scale(0.8); opacity: 0.8; } /* 6s Exhala */
+        /* --- Contenedor Principal --- */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(90, 125, 116, 0.1);
         }
 
-        .breathing-circle-animation {
-            /* 4s inhala + 6s exhala = 10s total */
-            animation: breathe 10s infinite ease-in-out;
-        }
-        
-        /* Animación para 4-7-8 (19s) */
-        @keyframes breathe-478 {
-            0%   { transform: scale(0.8); opacity: 0.8; } /* Inicio */
-            21%  { transform: scale(1); opacity: 1; }   /* 4s Inhala */
-            57.8% { transform: scale(1); opacity: 1; }   /* 7s Sostén */
-            100% { transform: scale(0.8); opacity: 0.8; } /* 8s Exhala */
-        }
-        .breathing-478-animation {
-            animation: breathe-478 19s infinite ease-in-out;
+        header {
+            text-align: center;
+            border-bottom: 2px solid var(--color-bg);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
         }
 
-        /* Animación para Box Breathing (16s) */
-        @keyframes breathe-box {
-            0%   { transform: scale(0.8); opacity: 0.8; } /* Inicio */
-            25%  { transform: scale(1); opacity: 1; }   /* 4s Inhala */
-            50%  { transform: scale(1); opacity: 1; }   /* 4s Sostén */
-            75%  { transform: scale(0.9); opacity: 0.9; } /* 4s Exhala */
-            100% { transform: scale(0.8); opacity: 0.8; } /* 4s Sostén */
-        }
-        .breathing-box-animation {
-            animation: breathe-box 16s infinite ease-in-out;
+        header h1 {
+            color: var(--color-text);
+            font-weight: 600;
         }
 
-        /* Estilos del Escaneo Corporal */
-        #human-silhouette path {
-            fill: #D6F1EE; /* bg-calm-100 */
-            stroke: #2D7A70; /* text-calm-700 */
-            stroke-width: 1.5;
-            transition: fill 0.3s ease;
+        header p {
+            font-size: 1.1em;
+            color: var(--color-text-light);
+        }
+
+        /* --- Estilos de Sección --- */
+        section {
+            margin-bottom: 35px;
+        }
+
+        h2 {
+            color: var(--color-text);
+            font-weight: 500;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid var(--color-primary);
+        }
+
+        p, li {
+            font-size: 1em;
+            color: var(--color-text-light);
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        /* --- 1. Animación de Respiración --- */
+        .breathing-animator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 250px;
+            background-color: var(--color-bg);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        #breathing-circle {
+            width: 150px;
+            height: 150px;
+            background-color: var(--color-secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 4s ease-in-out, background-color 4s ease-in-out;
+            /* La animación de JS controlará los tiempos de inhalar/exhalar */
+        }
+
+        #breathing-text {
+            font-size: 1.2em;
+            font-weight: 500;
+            color: var(--color-text);
+            position: absolute;
+            transition: opacity 0.5s ease;
+        }
+
+        /* --- 2. Acordeón para Ejercicios (Usando <details>) --- */
+        details {
+            background: #ffffff;
+            border: 1px solid var(--color-bg);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(90, 125, 116, 0.05);
+        }
+
+        summary {
+            font-size: 1.1em;
+            font-weight: 500;
+            padding: 15px;
+            cursor: pointer;
+            list-style: none; /* Oculta el marcador de flecha por defecto */
+            position: relative;
+        }
+
+        /* Flecha personalizada para el acordeón */
+        summary::after {
+            content: '▾';
+            position: absolute;
+            right: 20px;
+            font-size: 1.2em;
+            transition: transform 0.2s ease;
+        }
+
+        details[open] summary::after {
+            transform: rotate(180deg);
+        }
+
+        .details-content {
+            padding: 0 20px 20px 20px;
+            border-top: 1px solid var(--color-bg);
+        }
+
+        .details-content h3 {
+            margin-top: 15px;
+            margin-bottom: 10px;
+            color: var(--color-text);
+        }
+
+        /* --- 3. Técnica de Grounding --- */
+        .grounding-box {
+            background-color: var(--color-secondary);
+            color: var(--color-text);
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .grounding-box h3 {
+            color: var(--color-text);
+            margin-top: 0;
+        }
+        .grounding-box p {
+            font-size: 1.1em;
+            font-weight: 500;
+            color: var(--color-text);
+            margin-bottom: 8px;
+        }
+
+        /* --- Escaneo Corporal --- */
+        .body-scan-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            background-color: var(--color-bg);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .body-scan-svg {
+            width: 100%;
+            max-width: 250px; /* Ajusta el tamaño de la silueta */
+            height: auto;
+            border: 1px solid var(--color-primary);
+            border-radius: 8px;
+            background-color: white;
+        }
+
+        .body-scan-svg path {
+            fill: #e0f2f1; /* Color base del cuerpo */
+            stroke: var(--color-text-light);
+            stroke-width: 0.8;
+            transition: fill 0.2s ease, stroke-width 0.2s ease;
             cursor: pointer;
         }
 
-        #human-silhouette path:hover {
-            fill: #AEE5E0; /* bg-calm-200 */
+        .body-scan-svg path:hover {
+            fill: var(--color-primary);
+            stroke-width: 1.5;
         }
 
-        #human-silhouette path.body-part-active {
-            fill: #2D7A70; /* text-calm-700 */
-            stroke: #1D4E49;
-            animation: pulse 1.5s infinite ease-in-out;
+        .body-scan-svg path.active {
+            fill: var(--color-secondary);
+            stroke-width: 1.5;
+            animation: pulse-active 1.5s infinite alternate; /* Animación para la zona activa */
         }
         
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.7; }
-            100% { opacity: 1; }
+        @keyframes pulse-active {
+            from { fill: var(--color-secondary); }
+            to { fill: var(--color-primary); }
         }
 
-        /* Acordeón */
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease-out;
+        #scan-instructions {
+            margin-top: 20px;
+            background-color: #ffffff;
+            border: 1px solid var(--color-secondary);
+            padding: 15px;
+            border-radius: 8px;
+            min-height: 80px; /* Para evitar que el layout salte */
+            display: flex;
+            align-items: center;
+            text-align: center;
+            font-size: 1.1em;
+            color: var(--color-text);
+            font-style: italic;
+            transition: all 0.3s ease-out;
         }
 
-        /* Caja de Corazones */
-        @keyframes float-heart {
-            0% { transform: translateY(0) scale(1); opacity: 1; }
-            100% { transform: translateY(-80px) scale(1.5); opacity: 0; }
-        }
-
-        .heart-particle {
-            position: absolute;
-            bottom: 10px;
-            font-size: 1.5rem;
-            animation: float-heart 3s ease-out infinite;
-        }
-
-        /* Animación de texto */
-        @keyframes fadeInOut {
-            0% { opacity: 0; transform: translateY(10px); }
-            20% { opacity: 1; transform: translateY(0); }
-            80% { opacity: 1; transform: translateY(0); }
-            100% { opacity: 0; transform: translateY(-10px); }
-        }
-        
-        #heart-box-text {
-            animation: fadeInOut 5s infinite ease-in-out;
-        }
     </style>
 </head>
+<body>
 
-<body class="bg-calm-50 text-calm-900 min-h-screen">
+    <div class="container">
+        <header>
+            <h1>Tu espacio de calma, Creado por tu fan #1 :3</h1>
+            <p>Bienvenido. Estás en un lugar seguro. Respira.</p>
+        </header>
 
-    <!-- Header -->
-    <header class="bg-white shadow-sm sticky top-0 z-10">
-        <nav class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <svg data-lucide="leaf" class="w-6 h-6 text-calm-700"></svg>
-                <span class="text-2xl font-bold text-calm-700">Refugio de Calma</span>
+        <section id="ayuda-inmediata">
+            <h2>Ayuda Inmediata</h2>
+            <p>Si te sientes abrumado ahora mismo, empieza aquí.</p>
+
+            <h3>Ejercicio de Respiración Guiado (4-6)</h3>
+            <div class="breathing-animator">
+                <div id="breathing-circle"></div>
+                <div id="breathing-text">Cargando...</div>
             </div>
-            <div class="flex space-x-4">
-                <a href="#respiracion" class="text-calm-700 hover:text-calm-900">Respiración</a>
-                <a href="#escaneo" class="text-calm-700 hover:text-calm-900">Escaneo</a>
-                <a href="#grounding" class="text-calm-700 hover:text-calm-900">Anclaje</a>
-                <a href="#info" class="text-calm-700 hover:text-calm-900">Info</a>
-                <a href="#mensajes" class="text-calm-700 hover:text-calm-900">Mensajes</a>
+            
+            <h3 style="margin-top: 30px;">Técnica de Anclaje (Grounding) 5-4-3-2-1</h3>
+            <div class="grounding-box">
+                <p>Nombra mentalmente:</p>
+                <p><strong>5</strong> cosas que puedas <strong>VER</strong></p>
+                <p><strong>4</strong> cosas que puedas <strong>TOCAR</strong></p>
+                <p><strong>3</strong> cosas que puedas <strong>OÍR</strong></p>
+                <p><strong>2</strong> cosas que puedas <strong>OLER</strong></p>
+                <p><strong>1</strong> cosa que puedas <strong>SABOREAR</strong></p>
             </div>
-        </nav>
-    </header>
+        </section>
 
-    <!-- Contenido Principal -->
-    <main class="max-w-6xl mx-auto p-4 md:p-8 space-y-12">
+        <section id="ejercicios">
+            <h2>Ejercicios de Respiración</h2>
+            <p>La respiración consciente es la herramienta más rápida para calmar tu sistema nervioso.</p>
 
-        <!-- Sección de Bienvenida -->
-        <section class="text-center p-8 bg-white rounded-xl shadow-lg">
-            <h1 class="text-3xl md:text-4xl font-bold text-calm-700 mb-4">Bienvenida a tu espacio seguro</h1>
-            <p class="text-lg text-calm-900 max-w-2xl mx-auto">
-                Este es un lugar tranquilo solo para ti. Aquí encontrarás herramientas para ayudarte a encontrar la calma cuando más lo necesites.
+            <details>
+                <summary>Respiración Diafragmática (del Vientre)</summary>
+                <div class="details-content">
+                    <p>Esta técnica ayuda a usar toda tu capacidad pulmonar y reduce el ritmo cardíaco.</p>
+                    <ol>
+                        <li>Acuéstate o siéntate cómodamente.</li>
+                        <li>Coloca una mano en tu pecho y la otra en tu vientre, justo debajo de las costillas.</li>
+                        <li>Inhala lentamente por la nariz. Siente cómo tu vientre se expande y empuja tu mano. El pecho debe moverse muy poco.</li>
+                        <li>Exhala lentamente por la boca con los labios fruncidos (como si soplaras una vela). Siente cómo tu vientre se hunde.</li>
+                        <li>Repite durante 3 a 5 minutos.</li>
+                    </ol>
+                </div>
+            </details>
+
+            <details>
+                <summary>Respiración 4-7-8</summary>
+                <div class="details-content">
+                    <p>Conocida como la "respiración relajante", puede ayudar a conciliar el sueño.</p>
+                    <ol>
+                        <li>Exhala completamente por la boca, haciendo un sonido de "soplo".</li>
+                        <li>Cierra la boca e inhala por la nariz contando mentalmente hasta <strong>4</strong>.</li>
+                        <li>Sostén la respiración contando hasta <strong>7</strong>.</li>
+                        <li>Exhala completamente por la boca (con sonido) contando hasta <strong>8</strong>.</li>
+                        <li>Esto es una respiración completa. Repite el ciclo 3 veces más.</li>
+                    </ol>
+                </div>
+            </details>
+
+            <details>
+                <summary>Respiración Cuadrada (Box Breathing)</summary>
+                <div class="details-content">
+                    <p>Usada por Navy SEALs para mantener la calma bajo presión.</p>
+                    <ol>
+                        <li>Inhala lentamente por la nariz contando hasta <strong>4</strong>.</li>
+                        <li>Sostén la respiración contando hasta <strong>4</strong>.</li>
+                        <li>Exhala lentamente por la nariz (o boca) contando hasta <strong>4</strong>.</li>
+                        <li>Sostén la exhalación contando hasta <strong>4</strong>.</li>
+                        <li>Repite el "cuadrado" durante varios minutos.</li>
+                    </ol>
+                </div>
+            </details>
+        </section>
+
+        <section id="mindfulness">
+            <h2>Prácticas de Atención Plena (Mindfulness)</h2>
+            <p>El mindfulness es simplemente prestar atención al presente, sin juzgar. Puedes practicarlo en cualquier momento.</p>
+            
+            <details>
+                <summary>Mindfulness al Lavar los Platos</summary>
+                <div class="details-content">
+                    <p>En lugar de lavar en piloto automático, úsalo como una práctica de anclaje.</p>
+                    <ul>
+                        <li><strong>Siente:</strong> Nota la temperatura del agua en tus manos. Siente la textura de la esponja y la superficie del plato.</li>
+                        <li><strong>Escucha:</strong> Presta atención al sonido del agua corriendo y al frotar de la esponja.</li>
+                        <li><strong>Huele:</strong> Nota el aroma del jabón.</li>
+                        <li><strong>Observa:</strong> Mira cómo desaparece la suciedad y cómo se forman las burbujas.</li>
+                        <li>Cuando tu mente divague (y lo hará), simplemente tráela de vuelta con amabilidad a la tarea de lavar los platos.</li>
+                    </ul>
+                </div>
+            </details>
+
+            <details>
+                <summary>Afirmaciones Positivas</summary>
+                <div class="details-content">
+                    <p>A veces, necesitamos recordatorios amables. Repite aquellos que resuenen contigo.</p>
+                    <ul>
+                        <li>"Este sentimiento es incómodo, pero no es peligroso."</li>
+                        <li>"He superado momentos difíciles antes, y también superaré esto."</li>
+                        <li>"Estoy haciendo lo mejor que puedo con lo que tengo."</li>
+                        <li>"Elijo responder con calma en lugar de reaccionar con miedo."</li>
+                        <li>"Todos mis sentimientos son válidos, pero no son la totalidad de quién soy."</li>
+                        <li>"Estoy a salvo en este momento."</li>
+                    </ul>
+                </div>
+            </details>
+        </section>
+
+        <section id="body-scan">
+            <h2>Escaneo Corporal Interactivo</h2>
+            <p>Dirige tu atención a las diferentes partes de tu cuerpo. Observa cualquier sensación (tensión, calor, frío, picazón, etc.) sin juzgarla. Solo nota y respira.</p>
+
+            <div class="body-scan-container">
+                <svg viewBox="0 0 200 400" class="body-scan-svg">
+                    <title>Silueta Humana para Escaneo Corporal</title>
+                    <path id="head" d="M100 20 C115 20, 125 35, 125 50 L125 60 C125 75, 115 90, 100 90 C85 90, 75 75, 75 60 L75 50 C75 35, 85 20, 100 20 Z" data-label="Cabeza y Rostro"/>
+                    <path id="neck-shoulders" d="M90 90 L110 90 L130 110 L135 120 L130 130 L120 125 L110 120 H90 L80 125 L70 130 L65 120 L70 110 L90 90 Z" data-label="Cuello y Hombros"/>
+                    <path id="chest-upper-back" d="M90 120 H110 V150 H120 V160 H110 V170 H90 V160 H80 V150 H90 Z M130 110 L135 120 V160 C135 170, 130 175, 120 180 L110 185 V170 H120 V160 H110 L90 160 H80 L70 160 C65 170, 60 175, 60 160 V120 L65 110 L70 110 Z" data-label="Pecho y Espalda Superior"/>
+                    <path id="arm-left" d="M130 120 C145 130, 150 150, 150 170 V200 C150 220, 145 240, 130 250 L120 230 L125 180 L125 140 L130 120 Z" data-label="Brazo Izquierdo"/>
+                    <path id="arm-right" d="M70 120 C55 130, 50 150, 50 170 V200 C50 220, 55 240, 70 250 L80 230 L75 180 L75 140 L70 120 Z" data-label="Brazo Derecho"/>
+                    <path id="abdomen-lower-back" d="M90 170 H110 V220 H90 Z M75 180 L80 230 C80 240, 90 250, 100 250 C110 250, 120 240, 120 230 L125 180 Z" data-label="Abdomen y Espalda Baja"/>
+                    <path id="hips-glutes" d="M80 230 C80 240, 90 250, 100 250 C110 250, 120 240, 120 230 L110 250 L90 250 Z M75 240 C70 250, 70 260, 75 270 L85 275 L90 260 L80 250 Z M125 240 C130 250, 130 260, 125 270 L115 275 L110 260 L120 250 Z" data-label="Cadera y Glúteos"/>
+                    <path id="thigh-left" d="M90 250 L95 270 V300 L90 310 L85 300 L80 270 Z M100 250 L105 270 V300 L110 310 L115 300 L120 270 Z" data-label="Muslo y Rodilla Izquierda"/>
+                    <path id="thigh-right" d="M80 270 L85 300 L90 310 L95 300 V270 L90 250 Z M110 270 L115 300 L120 310 L125 300 V270 L120 250 Z" data-label="Muslo y Rodilla Derecha"/>
+                    <path id="lower-leg-left" d="M85 310 V350 L90 360 L95 350 V310 Z" data-label="Pantorrilla Izquierda"/>
+                    <path id="lower-leg-right" d="M105 310 V350 L110 360 L115 350 V310 Z" data-label="Pantorrilla Derecha"/>
+                    <path id="foot-left" d="M85 360 L80 370 H90 L95 360 Z" data-label="Pie Izquierdo"/>
+                    <path id="foot-right" d="M105 360 L110 370 H120 L115 360 Z" data-label="Pie Derecho"/>
+                </svg>
+                <p id="scan-instructions">Haz clic en una parte del cuerpo para empezar tu escaneo.</p>
+            </div>
+        </section>
+
+        <section id="psicoeducacion">
+            <h2>Entendiendo la Ansiedad (El "Por Qué")</h2>
+            <p>El conocimiento es poder. Entender qué es la ansiedad reduce el miedo a la propia sensación.</p>
+
+            <details>
+                <summary>¿Qué es la Ansiedad?</summary>
+                <div class="details-content">
+                    <p>La ansiedad es la <strong>alarma de incendio</strong> natural de tu cuerpo. Es parte de la respuesta de "lucha o huida", diseñada para protegerte del peligro.</p>
+                    <p>A veces, esta alarma se vuelve demasiado sensible y se activa cuando no hay un peligro real (como una alarma de incendios que se activa con el vapor de la ducha). Tu corazón late rápido, respiras deprisa y tus músculos se tensan para prepararte para... bueno, un peligro que no existe. No estás "roto", tu sistema de alarma solo está sobreprotegiéndote.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>¿Qué es un Ataque de Pánico?</summary>
+                <div class="details-content">
+                    <p><strong>Diferencia clave:</strong></p>
+                    <ul>
+                        <li><strong>Ataque de Ansiedad:</strong> Generalmente se construye lentamente. Es una preocupación intensa y persistente sobre algo (el futuro, un evento, etc.). Es muy desagradable, pero manejable.</li>
+                        <li><strong>Ataque de Pánico:</strong> Es una ola repentina e intensa de miedo que alcanza su pico en 10 minutos. Es aterrador y a menudo físico (palpitaciones, sensación de ahogo, mareo). A menudo parece salir "de la nada".</li>
+                    </ul>
+                    <p>Ambos son temporales y no son peligrosos, aunque se sientan así.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>¿Por qué me pasa esto a mí?</summary>
+                <div class="details-content">
+                    <p><strong>No es tu culpa.</strong> Nadie elige tener ansiedad. Es una combinación compleja de factores:</p>
+                    <ul>
+                        <li><strong>Genética:</strong> Algunas personas simplemente tienen sistemas nerviosos más sensibles.</li>
+                        <li><strong>Estrés:</strong> El estrés prolongado (trabajo, familia, finanzas) puede agotar tu capacidad de afrontamiento.</li>
+                        <li><strong>Experiencias Pasadas:</strong> Eventos difíciles pueden enseñar a tu cerebro a estar en alerta constante.</li>
+                        <li><strong>Hábitos:</strong> Falta de sueño, cafeína o no tener tiempo de descanso pueden contribuir.</li>
+                    </ul>
+                    <p>Entender la causa no es para culpar, sino para saber dónde enfocar la compasión y el esfuerzo.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>El Círculo Vicioso de la Ansiedad</summary>
+                <div class="details-content">
+                    <p>El ciclo a menudo funciona así:</p>
+                    <ol>
+                        <li><strong>Sensación Corporal:</strong> (Ej. Tu corazón late un poco más rápido).</li>
+                        <li><strong>Pensamiento:</strong> "¿Qué pasa? ¿Me está dando un infarto?".</li>
+                        <li><strong>Emoción:</strong> Miedo, pánico.</li>
+                        <li><strong>Reacción:</strong> Tu cuerpo libera adrenalina en respuesta al miedo, lo que hace que tu corazón lata AÚN más rápido.</li>
+                        <li><strong>Conclusión:</strong> "¡Ves! ¡Algo malo está pasando!".</li>
+                    </ol>
+                    <p>Este es el "miedo al miedo". Rompemos el ciclo al no tenerle miedo a las sensaciones (Paso 1) y al no catastrofizar (Paso 2). Las técnicas de respiración ayudan aquí.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Mitos vs. Realidades</summary>
+                <div class="details-content">
+                    <p><strong>Mito:</strong> "Me voy a volver loco" o "Voy a perder el control".</p>
+                    <p><strong>Realidad:</strong> La ansiedad y los ataques de pánico no causan locura. Son sensaciones físicas y mentales intensas, pero son temporales y no te harán perder el control de tus actos.</p>
+                    <br>
+                    <p><strong>Mito:</strong> "Me va a dar un infarto".</p>
+                    <p><strong>Realidad:</strong> Aunque las palpitaciones dan miedo, un ataque de pánico no es un ataque al corazón. Es tu cuerpo activando la "lucha o huida", no fallando.</p>
+                    <br>
+                    <p><strong>Mito:</strong> "Si tengo ansiedad, soy débil".</p>
+                    <p><strong>Realidad:</strong> La ansiedad no tiene nada que ver con la debilidad. Se necesita una fuerza tremenda para vivir con un sistema de alarma hipersensible. Eres un superviviente.</p>
+                </div>
+            </details>
+        </section>
+
+        <section id="recursos">
+            <h2>Esto es un primer paso, no el último</h2>
+            <p>Estas herramientas son excelentes para manejar los síntomas en el momento. Si sientes que la ansiedad interfiere con tu vida diaria, por favor considera buscar ayuda profesional.</p>
+            <p>Hablar con un terapeuta puede darte herramientas personalizadas y ayudarte a llegar a la raíz del problema. No tienes que pasar por esto solo.</p>
+            <p style="text-align: center; font-style: italic; font-size: 1.2em; color: var(--color-primary); margin-top: 30px;">
+                No estas sola mi vida, Lauty va a estar siempre para cuidarte y apoyarte te adoro.
             </p>
         </section>
 
-        <!-- Sección de Ejercicios de Respiración -->
-        <section id="respiracion" class="p-6 bg-white rounded-xl shadow-lg">
-            <h2 class="text-2xl font-bold text-calm-700 mb-4 text-center">Ejercicios de Respiración</h2>
-            
-            <!-- Pestañas para seleccionar ejercicio -->
-            <div class="flex justify-center space-x-2 mb-6 border-b border-calm-300">
-                <button class="tab-button active-tab py-2 px-4 font-medium text-calm-700 border-b-2 border-calm-700" data-type="guiada">Respiración Guiada (4-6)</button>
-                <button class="tab-button py-2 px-4 font-medium text-gray-500 border-b-2 border-transparent hover:border-calm-300" data-type="478">Respiración 4-7-8</button>
-                <button class="tab-button py-2 px-4 font-medium text-gray-500 border-b-2 border-transparent hover:border-calm-300" data-type="box">Respiración Cuadrada</button>
-                <button class="tab-button py-2 px-4 font-medium text-gray-500 border-b-2 border-transparent hover:border-calm-300" data-type="diafragmatica">Diafragmática</button>
-            </div>
+    </div>
 
-            <!-- Contenedor del visualizador -->
-            <div id="breathing-container" class="text-center">
-                <!-- Visualizador de Respiración -->
-                <div class="relative w-56 h-56 md:w-72 md:h-72 mx-auto mb-6 flex items-center justify-center">
-                    <div class="absolute w-full h-full bg-calm-100 rounded-full opacity-50"></div>
-                    <div id="breathing-circle" class="w-40 h-40 md:w-56 md:h-56 bg-calm-200 rounded-full shadow-inner transition-all duration-300 ease-in-out"></div>
-                    <span id="breathing-text" class="absolute text-3xl font-bold text-calm-900 transition-opacity duration-500">Presiona Iniciar</span>
-                </div>
-                
-                <button id="start-breathing-btn" class="bg-calm-700 text-white px-8 py-3 rounded-full font-bold text-lg shadow-md hover:bg-calm-900 transition-colors">
-                    Iniciar
-                </button>
-                
-                <!-- Descripciones de los ejercicios -->
-                <div id="exercise-description" class="mt-6 max-w-xl mx-auto text-calm-700">
-                    <p data-type="guiada" class="description-text"><strong>Respiración Guiada (4-6):</strong> Inhala lentamente contando hasta 4, exhala lentamente contando hasta 6. Esto calma el sistema nervioso.</p>
-                    <p data-type="478" class="description-text hidden"><strong>Respiración 4-7-8:</strong> Inhala por la nariz (4s), sostén la respiración (7s) y exhala ruidosamente por la boca (8s). Ideal para relajarse rápido.</p>
-                    <p data-type="box" class="description-text hidden"><strong>Respiración Cuadrada:</strong> Inhala (4s), sostén (4s), exhala (4s), sostén (4s). Ayuda a centrar la mente.</p>
-                    <p data-type="diafragmatica" class="description-text hidden"><strong>Respiración Diafragmática:</strong> Coloca una mano en tu pecho y otra en tu abdomen. Inhala profundamente por la nariz, asegurándote de que tu abdomen se expanda (la mano en el pecho debe moverse poco). Exhala lentamente. Esto usa toda tu capacidad pulmonar.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Sección de Escaneo Corporal -->
-        <section id="escaneo" class="p-6 bg-white rounded-xl shadow-lg">
-            <h2 class="text-2xl font-bold text-calm-700 mb-4 text-center">Escaneo Corporal Interactivo</h2>
-            <p class="text-center text-calm-700 mb-6 max-w-2xl mx-auto">
-                Haz clic en una parte del cuerpo para enfocar tu atención en ella. Nota las sensaciones sin juzgar.
-            </p>
-            <div class="flex flex-col md:flex-row items-center justify-center gap-8">
-                <!-- Silueta Humana SVG -->
-                <div class="w-full md:w-1/3">
-                    <svg id="human-silhouette" viewBox="0 0 200 500" xmlns="http://www.w3.org/2000/svg" class="max-h-[500px] mx-auto">
-                        <!-- Cabeza -->
-                        <path class="body-part" data-part="head" d="M100,60 C80,60 70,80 70,100 C70,120 80,140 100,140 C120,140 130,120 130,100 C130,80 120,60 100,60 Z"/>
-                        <!-- Cuello y Hombros -->
-                        <path class="body-part" data-part="shoulders" d="M100,140 C90,140 85,145 80,150 L60,160 C50,165 40,170 40,180 C40,190 50,195 60,195 L140,195 C150,195 160,190 160,180 C160,170 150,165 140,160 L120,150 C115,145 110,140 100,140 Z"/>
-                        <!-- Pecho y Abdomen -->
-                        <path class="body-part" data-part="torso" d="M60,195 L40,280 C40,300 50,310 70,310 L130,310 C150,310 160,300 160,280 L140,195 Z"/>
-                        <!-- Brazo Izquierdo -->
-                        <path class="body-part" data-part="arms" d="M40,180 C30,180 20,190 20,200 L10,300 C10,310 20,320 30,315 L40,280 Z"/>
-                        <!-- Brazo Derecho -->
-                        <path class="body-part" data-part="arms" d="M160,180 C170,180 180,190 180,200 L190,300 C190,310 180,320 170,315 L160,280 Z"/>
-                        <!-- Pierna Izquierda -->
-                        <path class="body-part" data-part="legs" d="M70,310 L50,450 C50,470 60,480 70,480 L85,480 L85,310 Z"/>
-                        <!-- Pierna Derecha -->
-                        <path class="body-part" data-part="legs" d="M130,310 L150,450 C150,470 140,480 130,480 L115,480 L115,310 Z"/>
-                        <!-- Pies -->
-                        <path class="body-part" data-part="feet" d="M50,480 C40,480 30,490 30,500 L85,500 L85,480 Z M150,480 C160,480 170,490 170,500 L115,500 L115,480 Z"/>
-                    </svg>
-                </div>
-                <!-- Mensaje del Escaneo -->
-                <div id="body-scan-message" class="w-full md:w-1/2 h-56 bg-calm-100 rounded-xl p-6 flex items-center justify-center">
-                    <p class="text-lg text-calm-900 text-center font-medium">Selecciona una zona para comenzar tu escaneo.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Secciones de Grounding y Mindfulness -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            
-            <!-- Técnica de Grounding 5-4-3-2-1 -->
-            <section id="grounding" class="p-6 bg-white rounded-xl shadow-lg">
-                <h2 class="text-2xl font-bold text-calm-700 mb-4 flex items-center">
-                    <svg data-lucide="anchor" class="w-6 h-6 mr-2"></svg>
-                    Anclaje: Técnica 5-4-3-2-1
-                </h2>
-                <p class="text-calm-700 mb-4">Usa tus sentidos para conectarte con el presente.</p>
-                <ul class="space-y-3 list-none">
-                    <li class="flex items-start"><span class="flex-shrink-0 text-3xl font-bold text-calm-700 mr-3 w-8">5</span> <span class="pt-1">Mira 5 cosas que puedas ver. (Ej. una planta, una lámpara, una sombra).</span></li>
-                    <li class="flex items-start"><span class="flex-shrink-0 text-3xl font-bold text-calm-700 mr-3 w-8">4</span> <span class="pt-1">Siente 4 cosas que puedas tocar. (Ej. la tela de tu ropa, la mesa fría, tu propio pelo).</span></li>
-                    <li class="flex items-start"><span class="flex-shrink-0 text-3xl font-bold text-calm-700 mr-3 w-8">3</span> <span class="pt-1">Escucha 3 cosas que puedas oír. (Ej. el ventilador, un pájaro, el silencio).</span></li>
-                    <li class="flex items-start"><span class="flex-shrink-0 text-3xl font-bold text-calm-700 mr-3 w-8">2</span> <span class="pt-1">Huele 2 cosas que puedas oler. (Ej. el café, un perfume, el aire limpio).</span></li>
-                    <li class="flex items-start"><span class="flex-shrink-0 text-3xl font-bold text-calm-700 mr-3 w-8">1</span> <span class="pt-1">Saborea 1 cosa que puedas saborear. (Ej. un sorbo de agua, el sabor de tu boca).</span></li>
-                </ul>
-            </section>
-
-            <!-- Atención al Presente -->
-            <section id="mindfulness" class="p-6 bg-white rounded-xl shadow-lg">
-                <h2 class="text-2xl font-bold text-calm-700 mb-4 flex items-center">
-                    <svg data-lucide="sparkles" class="w-6 h-6 mr-2"></svg>
-                    Atención al Presente
-                </h2>
-                <div class="bg-calm-100 rounded-lg p-4">
-                    <h3 class="font-bold text-lg text-calm-900 mb-2">Mindfulness al lavar los platos</h3>
-                    <p class="text-calm-700">
-                        La próxima vez que laves los platos, intenta hacerlo con atención plena. 
-                        Siente la temperatura del agua en tus manos. Escucha el sonido del agua y los platos. 
-                        Observa las burbujas del jabón. Huele el aroma del detergente. 
-                        En lugar de apurarte, concéntrate completamente en la tarea. Es una meditación en movimiento.
-                    </p>
-                </div>
-            </section>
-        </div>
-
-        <!-- Sección de Psicoeducación -->
-        <section id="info" class="p-6 bg-white rounded-xl shadow-lg">
-            <h2 class="text-2xl font-bold text-calm-700 mb-6 text-center">Entendiendo la Ansiedad (El "Por Qué")</h2>
-            <div class="space-y-4 max-w-3xl mx-auto">
-                
-                <!-- Item Acordeón 1 -->
-                <div class="border border-calm-300 rounded-lg">
-                    <button class="accordion-header w-full flex justify-between items-center p-4 text-left font-medium text-calm-900 hover:bg-calm-100">
-                        <span>¿Qué es la Ansiedad? (La respuesta de "lucha o huida")</span>
-                        <svg data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300"></svg>
-                    </button>
-                    <div class="accordion-content">
-                        <p class="p-4 pt-0 text-calm-700">
-                            La ansiedad es una respuesta natural de tu cuerpo al estrés. Es como una alarma interna. Cuando tu cerebro percibe una amenaza (real o imaginada), activa la respuesta de "lucha o huida". Libera hormonas como la adrenalina, lo que causa síntomas físicos: corazón acelerado, respiración rápida, tensión muscular. Esto era útil para escapar de peligros, pero hoy se activa con preocupaciones diarias, creando una sensación de malestar.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Item Acordeón 2 -->
-                <div class="border border-calm-300 rounded-lg">
-                    <button class="accordion-header w-full flex justify-between items-center p-4 text-left font-medium text-calm-900 hover:bg-calm-100">
-                        <span>¿Ataque de Pánico vs. Ataque de Ansiedad?</span>
-                        <svg data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300"></svg>
-                    </button>
-                    <div class="accordion-content">
-                        <p class="p-4 pt-0 text-calm-700">
-                            Un <strong>ataque de ansiedad</strong> suele estar relacionado con una preocupación específica (un examen, un problema) y puede crecer gradualmente.
-                            <br><br>
-                            Un <strong>ataque de pánico</strong> es mucho más intenso y repentino, a menudo sin un disparador obvio. Alcanza su punto máximo en minutos y viene con síntomas físicos abrumadores (sensación de ahogo, dolor en el pecho, mareos, miedo a morir o perder el control). Ambos son angustiantes, pero el pánico es una "ola" súbita e intensa.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Item Acordeón 3 -->
-                <div class="border border-calm-300 rounded-lg">
-                    <button class="accordion-header w-full flex justify-between items-center p-4 text-left font-medium text-calm-900 hover:bg-calm-100">
-                        <span>El Círculo Vicioso de la Ansiedad</span>
-                        <svg data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300"></svg>
-                    </button>
-                    <div class="accordion-content">
-                        <p class="p-4 pt-0 text-calm-700">
-                            El ciclo a menudo funciona así: <strong>1. Sientes un síntoma</strong> (ej. tu corazón late rápido). <strong>2. Lo interpretas como peligroso</strong> ("¿Me está dando un infarto?"). <strong>3. Esto crea más miedo</strong>, lo que <strong>4. Aumenta los síntomas físicos</strong> (el corazón late aún más rápido). Te quedas atrapada en un bucle de "miedo al miedo". Romper el ciclo implica aprender que los síntomas, aunque incómodos, no son peligrosos.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Item Acordeón 4 -->
-                <div class="border border-calm-300 rounded-lg">
-                    <button class="accordion-header w-full flex justify-between items-center p-4 text-left font-medium text-calm-900 hover:bg-calm-100">
-                        <span>Mitos vs. Realidades</span>
-                        <svg data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300"></svg>
-                    </button>
-                    <div class="accordion-content">
-                        <ul class="p-4 pt-0 text-calm-700 space-y-2">
-                            <li><strong>Mito:</strong> "Me voy a volver loca."<br><strong>Realidad:</strong> La ansiedad y los ataques de pánico no causan locura. Es una reacción exagerada del sistema de alarma de tu cuerpo. Es temporal.</li>
-                            <li><strong>Mito:</strong> "Voy a desmayarme."<br><strong>Realidad:</strong> Es muy improbable. Durante la ansiedad, tu presión arterial sube, mientras que para desmayarte, necesita bajar drásticamente. La sensación de mareo es por la hiperventilación, no por un desmayo inminente.</li>
-                            <li><strong>Mito:</strong> "No puedo controlarlo."<br><strong>Realidad:</strong> Puede sentirse así, pero tienes la capacidad de influir en ella. Las técnicas de respiración y anclaje son herramientas poderosas para "bajar el volumen" de la alarma.</li>
-                        </ul>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- Caja de Corazones y Mensajes -->
-        <section id="mensajes" class="p-6 md:p-10 bg-pink-100 rounded-xl shadow-lg relative overflow-hidden">
-            <div id="heart-particle-container" class="absolute inset-0">
-                <!-- Los corazones se generan con JS -->
-            </div>
-            <div class="relative z-10 flex flex-col items-center justify-center text-center h-48">
-                <h2 class="text-3xl font-bold text-pink-800 mb-6">Un recordatorio especial</h2>
-                <div id="heart-box-text-container" class="h-16">
-                    <p id="heart-box-text" class="text-2xl font-medium text-pink-700">
-                        <!-- El texto cambia aquí -->
-                    </p>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Footer Personal -->
-    <footer class="text-center p-10 mt-12 bg-calm-100">
-        <p class="text-lg text-calm-700 font-medium max-w-2xl mx-auto italic">
-            "Ayer vi que te pusiste mal por eso te hize esto como la página del corazonzito te gusto te quise hacer esto para que sepas que no estas solita"
-        </p>
-        <p class="text-sm text-calm-700 mt-4">Con mucho cariño. ❤️</p>
-    </footer>
-
-    <script>
-        // Inicializar iconos
-        lucide.createIcons();
-
-        // --- Lógica de Respiración ---
-        const breathingCircle = document.getElementById('breathing-circle');
-        const breathingText = document.getElementById('breathing-text');
-        const startBtn = document.getElementById('start-breathing-btn');
-        const tabs = document.querySelectorAll('.tab-button');
-        const descriptions = document.querySelectorAll('.description-text');
-        
-        let currentExercise = 'guiada';
-        let isBreathing = false;
-        let breathTimer;
-
-        // Datos de los ejercicios
-        const exercises = {
-            'guiada': [
-                { text: 'Inhala...', duration: 4000, animation: 'breathing-circle-animation', totalDuration: 10000 },
-                { text: 'Exhala...', duration: 6000 }
-            ],
-            '478': [
-                { text: 'Inhala (4s)', duration: 4000, animation: 'breathing-478-animation', totalDuration: 19000 },
-                { text: 'Sostén (7s)', duration: 7000 },
-                { text: 'Exhala (8s)', duration: 8000 }
-            ],
-            'box': [
-                { text: 'Inhala (4s)', duration: 4000, animation: 'breathing-box-animation', totalDuration: 16000 },
-                { text: 'Sostén (4s)', duration: 4000 },
-                { text: 'Exhala (4s)', duration: 4000 },
-                { text: 'Sostén (4s)', duration: 4000 }
-            ],
-            'diafragmatica': [] // Este es solo descriptivo
-        };
-
-        // Cambiar de pestaña
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const type = tab.dataset.type;
-                if (isBreathing) stopBreathing();
-                
-                currentExercise = type;
-                
-                tabs.forEach(t => t.classList.remove('active-tab', 'text-calm-700', 'border-calm-700', 'text-gray-500'));
-                tab.classList.add('active-tab', 'text-calm-700', 'border-calm-700');
-                tabs.forEach(t => {
-                    if (!t.classList.contains('active-tab')) {
-                        t.classList.add('text-gray-500');
-                    }
-                });
-
-                descriptions.forEach(desc => {
-                    if (desc.dataset.type === type) {
-                        desc.classList.remove('hidden');
-                    } else {
-                        desc.classList.add('hidden');
-                    }
-                });
-
-                // Habilitar/deshabilitar botón si es diafragmática
-                if (type === 'diafragmatica') {
-                    startBtn.classList.add('hidden');
-                    breathingCircle.classList.add('hidden');
-                    breathingText.classList.add('hidden');
-                } else {
-                    startBtn.classList.remove('hidden');
-                    breathingCircle.classList.remove('hidden');
-                    breathingText.classList.remove('hidden');
-                }
-            });
-        });
-
-        startBtn.addEventListener('click', () => {
-            if (isBreathing) {
-                stopBreathing();
-            } else {
-                startBreathing();
-            }
-        });
-
-        function startBreathing() {
-            isBreathing = true;
-            startBtn.textContent = 'Detener';
-            const exercise = exercises[currentExercise];
-            const animationClass = exercise[0].animation;
-            const totalDuration = exercise[0].totalDuration;
-            
-            breathingCircle.style.animationDuration = `${totalDuration}ms`;
-            breathingCircle.classList.add(animationClass);
-            
-            let step = 0;
-            
-            function doBreathStep() {
-                const currentStep = exercise[step % exercise.length];
-                breathingText.textContent = currentStep.text;
-                
-                breathTimer = setTimeout(() => {
-                    step++;
-                    doBreathStep();
-                }, currentStep.duration);
-            }
-            
-            doBreathStep();
-        }
-
-        function stopBreathing() {
-            isBreathing = false;
-            startBtn.textContent = 'Iniciar';
-            clearTimeout(breathTimer);
-            breathingCircle.classList.remove('breathing-circle-animation', 'breathing-478-animation', 'breathing-box-animation');
-            breathingText.textContent = 'Presiona Iniciar';
-        }
-
-        // --- Lógica del Escaneo Corporal ---
-        const bodyParts = document.querySelectorAll('#human-silhouette .body-part');
-        const scanMessageEl = document.getElementById('body-scan-message').querySelector('p');
-        
-        const scanInstructions = {
-            'head': 'Nota la tensión en tu frente, ojos y mandíbula. ¿Están apretados? Sin juzgar, solo observa. Dirige tu respiración a esta zona, imaginando que la tensión se suaviza con cada exhalación.',
-            'shoulders': 'Siente el peso de tus hombros y cuello. ¿Están caídos o tensos hacia las orejas? Nota cualquier rigidez. Respira profundamente y, al exhalar, imagina que se derriten y se sueltan.',
-            'arms': 'Lleva tu atención a tus brazos, manos y dedos. ¿Están fríos, calientes, hormigueando? ¿Tus puños están apretados? Observa sin cambiar nada. Siente la energía en tus manos.',
-            'torso': 'Observa tu pecho y abdomen. Nota el movimiento de tu respiración. ¿Es rápida o lenta? ¿Sientes opresión en el pecho o nudos en el estómago? Solo observa con curiosidad amable.',
-            'legs': 'Siente tus piernas, muslos y pantorrillas. Nota el contacto con la silla o el suelo. ¿Están inquietas o pesadas? Acepta la sensación. Dirige tu respiración hacia ellas.',
-            'feet': 'Termina en tus pies. Siente la planta de tus pies contra el suelo. Nota la temperatura. ¿Sientes hormigueo o presión? Imagina que raíces crecen desde tus pies, anclándote firmemente a la tierra.'
-        };
-
-        bodyParts.forEach(part => {
-            part.addEventListener('click', () => {
-                const partName = part.dataset.part;
-                
-                // Quitar clase activa de todas
-                bodyParts.forEach(p => p.classList.remove('body-part-active'));
-                
-                // Añadir clase activa a la seleccionada
-                part.classList.add('body-part-active');
-                
-                // Mostrar mensaje
-                scanMessageEl.textContent = scanInstructions[partName];
-            });
-        });
-
-        // --- Lógica del Acordeón ---
-        const accordionHeaders = document.querySelectorAll('.accordion-header');
-        accordionHeaders.forEach(header => {
-            header.addEventListener('click', () => {
-                const content = header.nextElementSibling;
-                const icon = header.querySelector('svg');
-                
-                if (content.style.maxHeight) {
-                    // Cerrar
-                    content.style.maxHeight = null;
-                    icon.style.transform = 'rotate(0deg)';
-                } else {
-                    // Abrir
-                    content.style.maxHeight = content.scrollHeight + 'px';
-                    icon.style.transform = 'rotate(180deg)';
-                }
-            });
-        });
-
-        // --- Lógica de la Caja de Corazones ---
-        const heartMessages = [
-            "TE QUIERO mucho no lo olvides",
-            "Te adoro preciosa la más linda sos",
-            "SOS super inteligente no dudes de eso",
-            "NUNCA te voy a dejar sola",
-            "SOS mi persona favorita",
-            "Te Amo te amo te amo",
-            "Te re compre dale deci k si",
-            "TE ADORO DIOSSSS",
-            "SOS PERFECTAAAA",
-            "UNICA Y HERMOSA",
-            "DIOS K HERMOSA",
-            "Ya se acabaron segui",
-            "AH te la creíste sigue",
-            "Te amo",
-            "Ya se acabaron encerio"
-        ];
-
-        const heartBoxText = document.getElementById('heart-box-text');
-        let messageIndex = 0;
-
-        function changeHeartMessage() {
-            heartBoxText.textContent = heartMessages[messageIndex];
-            messageIndex = (messageIndex + 1) % heartMessages.length;
-        }
-        
-        // Cambiar el mensaje cada 5 segundos (coincide con la animación CSS)
-        setInterval(changeHeartMessage, 5000);
-        // Llamar una vez al inicio
-        changeHeartMessage();
-
-        // Generar corazones flotantes
-        const heartContainer = document.getElementById('heart-particle-container');
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart-particle');
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + '%';
-            heart.style.animationDelay = Math.random() * 3 + 's';
-            heart.style.opacity = Math.random() * 0.5 + 0.3;
-            heart.style.fontSize = Math.random() * 1 + 'rem';
-            
-            heartContainer.appendChild(heart);
-            
-            // Remover el corazón después de la animación
-            setTimeout(() => {
-                heart.remove();
-            }, 3000);
-        }
-        
-        // Crear un corazón cada segundo
-        setInterval(createHeart, 1000);
-
-    </script>
 </body>
 </html>
