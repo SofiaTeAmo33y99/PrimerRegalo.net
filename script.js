@@ -1,128 +1,70 @@
-/* Espera a que toda la página (el HTML) se haya cargado antes de ejecutar el script */
+/*
+ * SCRIPT.JS para UN ESPACIO DE CALMA
+ *
+ * Este script controla la animación de respiración guiada (4-6)
+ * y el Escaneo Corporal Interactivo.
+ */
+
+// Espera a que todo el contenido de la página (HTML) se haya cargado
 document.addEventListener('DOMContentLoaded', () => {
 
-    /* --- 1. Lógica del Animador de Respiración --- */
-
+    // --- Animación de Respiración Guiada ---
     const circle = document.getElementById('breathing-circle');
     const text = document.getElementById('breathing-text');
-    const button = document.getElementById('start-breath-btn');
 
-    let isBreathing = false;
-    let inhaleTime = 4000;
-    let exhaleTime = 6000;
-    
-    let inhaleTimeout;
-    let exhaleTimeout;
+    const inhaleTime = 4000; // 4 segundos
+    const exhaleTime = 6000; // 6 segundos
 
-    function startBreathingCycle() {
-        if (!isBreathing) return;
+    const inhaleColor = '#a8d8c9'; // Verde menta
+    const exhaleColor = '#d0eaf0'; // Azul pálido
 
-        text.textContent = 'Inhala (4s)';
-        circle.style.transitionDuration = `${inhaleTime / 1000}s`;
-        circle.classList.add('expand');
+    function breatheCycle() {
+        text.textContent = 'Inhala... (4s)';
+        circle.style.transform = 'scale(1.25)';
+        circle.style.backgroundColor = inhaleColor;
 
-        inhaleTimeout = setTimeout(() => {
-            text.textContent = 'Exhala (6s)';
-            circle.style.transitionDuration = `${exhaleTime / 1000}s`;
-            circle.classList.remove('expand');
-
-            exhaleTimeout = setTimeout(() => {
-                startBreathingCycle();
-            }, exhaleTime);
-
+        setTimeout(() => {
+            text.textContent = 'Exhala... (6s)';
+            circle.style.transform = 'scale(1)';
+            circle.style.backgroundColor = exhaleColor;
+            setTimeout(breatheCycle, exhaleTime);
         }, inhaleTime);
     }
 
-    button.addEventListener('click', () => {
-        if (isBreathing) {
-            isBreathing = false;
-            button.textContent = 'Comenzar';
-            text.textContent = 'Presiona "Comenzar" para iniciar';
-            
-            clearTimeout(inhaleTimeout);
-            clearTimeout(exhaleTimeout);
+    breatheCycle();
 
-            circle.classList.remove('expand');
-            circle.style.transitionDuration = '0.5s';
+    // --- Escaneo Corporal Interactivo ---
+    const bodyParts = document.querySelectorAll('.body-scan-svg path');
+    const scanInstructions = document.getElementById('scan-instructions');
 
-        } else {
-            isBreathing = true;
-            button.textContent = 'Detener';
-            startBreathingCycle();
-        }
-    });
-
-
-    /* --- 2. Lógica del Escaneo Corporal Interactivo --- */
-
-    const bodyParts = document.querySelectorAll('.body-part');
-    const scanInstruction = document.getElementById('scan-instruction');
-
-    const scanInstructions = {
-        "Cabeza": "Nota cualquier sensación en tu cabeza y rostro. ¿Hay tensión en la mandíbula o la frente? Dirige tu respiración allí.",
-        "Cuello y Hombros": "Siente la tensión que a menudo se acumula aquí. ¿Está rígida? Permite que tu respiración suavice y libere.",
-        "Pecho": "¿Cómo se siente tu pecho? ¿Abierto o contraído? Observa el ritmo de tu corazón sin juicio. Respira profundamente aquí.",
-        "Abdomen": "Presta atención a tu abdomen, a menudo un centro de emociones. ¿Hay mariposas, nudos? Suaviza tu abdomen con cada exhalación.",
-        "Brazos y Manos": "Siente el peso y las sensaciones en tus brazos y manos. ¿Están relajados o tensos? Permite que se aflojen.",
-        "Pelvis y Caderas": "Conecta con la base de tu cuerpo. Siente la estabilidad de tus caderas. Suelta cualquier tensión en esta zona.",
-        "Piernas": "Nota tus piernas, tus pilares. ¿Hay inquietud o pesadez? Siente cómo te conectan con la tierra.",
-        "Pies": "Siente tus pies en el suelo. La conexión con la tierra, la estabilidad. Dirige tu atención a cada dedo, a la planta del pie."
+    const instructionsMap = {
+        "Cabeza y Rostro": "Siente la frente, la mandíbula, los ojos. ¿Hay tensión? Relaja.",
+        "Cuello y Hombros": "Percibe el peso de tus hombros. ¿Están elevados? Déjalos caer. Suelta el cuello.",
+        "Pecho y Espalda Superior": "Nota tu respiración. ¿Es profunda? ¿Hay presión? Observa el movimiento de tu pecho.",
+        "Brazo Izquierdo": "Siente tu brazo izquierdo, desde el hombro hasta los dedos. ¿Alguna sensación?",
+        "Brazo Derecho": "Siente tu brazo derecho, desde el hombro hasta los dedos. ¿Alguna sensación?",
+        "Abdomen y Espalda Baja": "Dirige tu respiración al abdomen. Siente cómo se expande al inhalar y se contrae al exhalar.",
+        "Cadera y Glúteos": "Conecta con tu base. Siente el asiento bajo tus glúteos. Permite que cualquier tensión se libere.",
+        "Muslo y Rodilla Izquierda": "Siente tu muslo y rodilla izquierda. ¿Peso, calor, hormigueo?",
+        "Muslo y Rodilla Derecha": "Siente tu muslo y rodilla derecha. ¿Peso, calor, hormigueo?",
+        "Pantorrilla Izquierda": "Observa tu pantorrilla izquierda. ¿Descansa suavemente?",
+        "Pantorrilla Derecha": "Observa tu pantorrilla derecha. ¿Descansa suavemente?",
+        "Pie Izquierdo": "Siente tu pie izquierdo, cada dedo, la planta, el talón. La conexión con el suelo.",
+        "Pie Derecho": "Siente tu pie derecho, cada dedo, la planta, el talón. La conexión con el suelo."
     };
 
     bodyParts.forEach(part => {
-        part.addEventListener('click', () => {
-            // Elimina el resaltado de todas las partes primero
-            bodyParts.forEach(p => p.classList.remove('highlighted'));
+        part.addEventListener('click', function() {
+            // Remueve la clase 'active' de todas las partes
+            bodyParts.forEach(p => p.classList.remove('active'));
             
-            // Resalta la parte clicada
-            part.classList.add('highlighted');
+            // Añade la clase 'active' a la parte clickeada
+            this.classList.add('active');
             
             // Muestra la instrucción correspondiente
-            const partName = part.dataset.part;
-            scanInstruction.textContent = scanInstructions[partName];
+            const label = this.getAttribute('data-label');
+            scanInstructions.textContent = instructionsMap[label] || "Dirige tu atención a esta zona del cuerpo. Observa sin juzgar.";
         });
     });
-
-
-    /* --- 3. Lógica de los Mensajes Personales --- */
-
-    const messages = [
-        "TE QUIERO mucho no lo olvides",
-        "Te adoro preciosa la más linda sos",
-        "SOS super inteligente no dudes de eso",
-        "NUNCA te voy a dejar sola",
-        "SOS mi persona favorita",
-        "Te Amo te amo te amo",
-        "Te re compre dale deci k si",
-        "TE ADORO DIOSSSS",
-        "SOS PERFECTAAAA",
-        "UNICA Y HERMOSA",
-        "DIOS K HERMOSA",
-        "Ya se acabaron segui",
-        "AH te la creíste sigue",
-        "Te amo",
-        "Ya se acabaron encerio"
-    ];
-
-    const personalTextElement = document.getElementById('personal-text');
-    let messageIndex = 0;
-
-    function changePersonalMessage() {
-        personalTextElement.classList.add('fade-out');
-
-        setTimeout(() => {
-            personalTextElement.textContent = messages[messageIndex];
-            
-            messageIndex++;
-            if (messageIndex >= messages.length) {
-                messageIndex = 0;
-            }
-
-            personalTextElement.classList.remove('fade-out');
-        }, 500);
-    }
-
-    changePersonalMessage();
-    setInterval(changePersonalMessage, 4000);
 
 });
